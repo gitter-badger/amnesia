@@ -1,0 +1,49 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'application'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+compileJava.options.encoding = 'UTF-8'
+
+mainClassName = "org.playstat.amnesia.Application"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'joda-time:joda-time:2.8.2'
+    compile 'org.joda:joda-money:0.10.0'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.4.0'
+
+    /* Spring */
+    compile("org.springframework.boot:spring-boot-starter-web")
+
+    /* logging */
+    compile 'org.slf4j:slf4j-api:1.7.3'
+    compile 'org.slf4j:log4j-over-slf4j:1.7.3'
+    compile 'ch.qos.logback:logback-classic:1.0.10'
+
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion=2.8
+}
+
+eclipseJdt << {
+    File f = file('.settings/org.eclipse.core.resources.prefs')
+    f.write('eclipse.preferences.version=1\n')
+    f.append('encoding/<project>=utf-8')
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.7.RELEASE")
+    }
+}
